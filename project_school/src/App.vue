@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <Alunos />
+    <Nav></Nav>
+    <div class="marginPrincipal">
+      <router-view :key="$route.fullPath"></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import Alunos from "./components/Aluno/Alunos.vue";
+import Nav from "./components/_nav/Nav";
 
 export default {
-  name: "App",
+  name: "app",
   components: {
-    Alunos,
+    Nav,
   },
 };
 </script>
@@ -29,15 +32,22 @@ html {
   margin: 0;
   height: 100%;
 }
+.marginPrincipal {
+  width: 50%;
+  margin: auto;
+}
 #app {
+  width: 100%;
 }
 .btn_Danger {
+  font-size: 0.8em !important;
   background-color: #fa4430;
 }
 .btn {
   padding: 10px 20px;
   cursor: pointer;
   border: 1px solid black;
+  font-size: 1.2em;
   color: white;
   font-weight: bold;
   border-radius: 5px;
@@ -69,7 +79,8 @@ table thead th {
 }
 .colPequeno {
   width: 5%;
-}
-#app {
+  text-align: right;
+  background-color: rgb(123, 217, 245);
+  font-weight: bold;
 }
 </style>

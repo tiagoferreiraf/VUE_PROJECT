@@ -38,18 +38,20 @@ namespace ProjectSchool_API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProjectSchool_API", Version = "v1" });
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)//_3_0
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)//_3_0
                         .AddNewtonsoftJson(options =>
                         {
                             options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                         });
 
             services.AddScoped<IRepository, Repository>();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,7 +60,6 @@ namespace ProjectSchool_API
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();

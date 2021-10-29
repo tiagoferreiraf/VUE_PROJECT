@@ -40,7 +40,11 @@
         </tr>
       </tbody>
       <tfoot v-else>
-        Nenhum aluno encontrado
+        <tr>
+          <td colspan="3" style="text-align: center">
+            <h5>Nenhum aluno encontrado</h5>
+          </td>
+        </tr>
       </tfoot>
     </table>
   </div>
@@ -65,12 +69,12 @@ export default {
     if (this.professorid) {
       this.carregarProfessores();
       this.$http
-        .get("http://localhost:3000/alunos?professor.id=" + this.professorid)
+        .get(`http://localhost:5001/api/alunos/ByProfessor/${this.professorid}`)
         .then((res) => res.json())
         .then((alunos) => (this.alunos = alunos));
     } else {
       this.$http
-        .get("http://localhost:3000/alunos")
+        .get("http://localhost:5001/api/aluno")
         .then((res) => res.json())
         .then((alunos) => (this.alunos = alunos));
     }
@@ -88,7 +92,7 @@ export default {
       };
 
       this.$http
-        .post("http://localhost:3000/alunos", _aluno)
+        .post("http://localhost:5001/api/aluno", _aluno)
         .then((res) => res.json())
         .then((aluno) => {
           this.alunos.push(aluno);
@@ -96,14 +100,16 @@ export default {
         });
     },
     remover(aluno) {
-      this.$http.delete(`http://localhost:3000/alunos/${aluno.id}`).then(() => {
-        let indice = this.alunos.indexOf(aluno);
-        this.alunos.splice(indice, 1);
-      });
+      this.$http
+        .delete(`http://localhost:5001/api/aluno/${aluno.id}`)
+        .then(() => {
+          let indice = this.alunos.indexOf(aluno);
+          this.alunos.splice(indice, 1);
+        });
     },
     carregarProfessores() {
       this.$http
-        .get("http://localhost:3000/professores/" + this.professorid)
+        .get("http://localhost:5001/api/professor/" + this.professorid)
         .then((res) => res.json())
         .then((professor) => {
           this.professor = professor;

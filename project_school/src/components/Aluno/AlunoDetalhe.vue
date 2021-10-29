@@ -77,12 +77,12 @@ export default {
   },
   created() {
     this.$http
-      .get("http://localhost:3000/alunos/" + this.idAluno)
+      .get("http://localhost:5001/api/aluno/" + this.idAluno)
       .then((res) => res.json())
       .then((aluno) => (this.aluno = aluno));
 
     this.$http
-      .get("http://localhost:3000/professores")
+      .get("http://localhost:5001/api/professor")
       .then((res) => res.json())
       .then((professor) => (this.professores = professor));
   },
@@ -99,7 +99,7 @@ export default {
         professor: _aluno.professor,
       };
       this.$http.put(
-        `http://localhost:3000/alunos/${_alunoEditar.id}`,
+        `http://localhost:5001/api/aluno/${_alunoEditar.id}`,
         _alunoEditar
       );
       this.visualizando = !this.visualizando;

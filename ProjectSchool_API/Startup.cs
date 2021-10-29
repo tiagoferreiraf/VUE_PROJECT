@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using ProjectSchool_API.Data;
 
 namespace ProjectSchool_API
@@ -37,6 +38,13 @@ namespace ProjectSchool_API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProjectSchool_API", Version = "v1" });
             });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)//_3_0
+                        .AddNewtonsoftJson(options =>
+                        {
+                            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                        });
+
+            services.AddScoped<IRepository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
